@@ -17,14 +17,16 @@ class Woo_Slider_Filter_Slides {
 	 * Setup.
 	 */
 	public static function init() {
-		add_filter( 'pre_get_posts', array( __CLASS__, 'pre_get_posts' ) );
+		add_action( 'pre_get_posts', array( __CLASS__, 'pre_get_posts' ) );
 	}
 	
 	/**
 	 * Disables filter suppression for slides.
 	 */
 	public static function pre_get_posts( WP_Query &$query ) {
-		unset( $query->query_vars['suppress_filters'] );
+		if ( $query->query_vars['post_type'] === 'slide' ) {
+			unset( $query->query_vars['suppress_filters'] );
+		}
 	}
 }
 add_action( 'init', array( 'Woo_Slider_Filter_Slides', 'init' ) );
