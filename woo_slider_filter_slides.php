@@ -24,8 +24,10 @@ class Woo_Slider_Filter_Slides {
 	 * Disables filter suppression for slides.
 	 */
 	public static function pre_get_posts( WP_Query &$query ) {
-		if ( $query->query_vars['post_type'] === 'slide' ) {
-			unset( $query->query_vars['suppress_filters'] );
+		if ( isset( $query->query_vars['post_type'] ) ) {
+			if ( $query->query_vars['post_type'] === 'slide' ) {
+				unset( $query->query_vars['suppress_filters'] );
+			}
 		}
 	}
 }
